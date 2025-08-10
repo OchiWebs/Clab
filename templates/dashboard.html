@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+    <h1 class="mb-0">Project Dashboard</h1>
+</div>
+<h3>My Accessible Projects</h3>
+<div class="list-group">
+    {% for id, project in projects.items() %}
+    <a href="{{ url_for('detail_proyek', proyek_uuid=id) }}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ project.name }}</h5>
+            <small class="text-muted">Owner: {{ USERS[project.owner_uuid].name }}</small>
+        </div>
+        <p class="mb-1">{{ project.description }}</p>
+    </a>
+    {% else %}
+    <div class="alert alert-info">You have no projects assigned.</div>
+    {% endfor %}
+</div>
+{% endblock %}

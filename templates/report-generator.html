@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Generate Report{% endblock %}
+{% block content %}
+<h1>Generate Report for {{ project.name }}</h1>
+<p>Masukkan judul kustom untuk laporan Anda. Judul ini akan ditampilkan di bagian atas halaman laporan yang dihasilkan.</p>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }} <div class="mb-3">
+                {{ form.title.label(class="form-label") }}
+                {{ form.title(class="form-control", id="title") }}
+            </div>
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+    </div>
+    <div class="card-footer text-muted small">
+        <strong>Hint for SSTI:</strong> Try template expressions like <code>{{ 7*7 }}</code> in the title.
+    </div>
+</div>
+{% endblock %}

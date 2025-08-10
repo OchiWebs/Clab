@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block title %}User Profile{% endblock %}
+{% block content %}
+<h1>User Profile</h1>
+<div class="card">
+    <div class="card-header">
+        User Information
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ user.name }}</h5>
+        <p class="card-text">
+            <strong>Username:</strong> {{ user.username }}<br>
+            <strong>Role:</strong> <span class="badge bg-info">{{ user.role }}</span><br>
+            <strong class="text-muted">UUID:</strong> <small class="text-muted">{{ user_uuid }}</small>
+        </p>
+        {% if session.user_id != user_uuid %}
+            <div class="alert alert-warning mt-3">
+                <strong><i class="bi bi-exclamation-triangle-fill"></i> Vulnerability Found!</strong> You are viewing someone else's profile.
+                This indicates a potential Broken Access Control or IDOR vulnerability.
+            </div>
+        {% endif %}
+    </div>
+</div>
+<a href="{{ url_for('dashboard') }}" class="btn btn-link mt-3">Back to Dashboard</a>
+{% endblock %}
