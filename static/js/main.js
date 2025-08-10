@@ -1,21 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Pastikan kita berada di halaman proyek dan ada elemen 'task-list'
     const taskListDiv = document.getElementById('task-list');
     if (!taskListDiv) return;
 
-    // Panggil API untuk mendapatkan data tugas menggunakan UUID dari template
     fetch(`/api/proyek/${PROJECT_UUID}/tasks`)
         .then(response => {
             if (!response.ok) {
-                // Tampilkan pesan error jika API mengembalikan status error (misal: 429 Too Many Requests)
                 return response.json().then(err => { throw new Error(err.error || `HTTP error! status: ${response.status}`) });
             }
             return response.json();
         })
         .then(data => {
-            console.log("API Response Received:", data); // Ini akan terlihat di console browser (F12)
+            console.log("API Response Received:", data);
             
-            taskListDiv.innerHTML = ''; // Bersihkan pesan "Loading..."
+            taskListDiv.innerHTML = ''; 
 
             if (data.error) {
                 taskListDiv.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;

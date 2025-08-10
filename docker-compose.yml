@@ -4,11 +4,8 @@ services:
   web:
     build: .
     ports:
-      # Map port 5001 on your computer to port 5000 inside the container
       - "5001:5000"
     volumes:
-      # Mount the current directory into the container for live code changes
       - .:/app
     environment:
-      # Set Flask to development mode for debugging
       - FLASK_ENV=development

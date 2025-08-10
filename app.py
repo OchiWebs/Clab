@@ -8,35 +8,27 @@ from collections import defaultdict
 import time
 
 app = Flask(__name__)
-# Kunci rahasia yang kuat sangat penting untuk keamanan sesi dan CSRF
 app.secret_key = 'a-very-complex-and-secure-secret-key-for-hard-mode'
 
-# --- Inisialisasi Pertahanan ---
 csrf = CSRFProtect(app)
 
-# Rintangan 1: Rate Limiting Sederhana (in-memory) untuk endpoint API
-RATE_LIMIT = 5  # request per
-RATE_LIMIT_WINDOW = 10  # detik
+RATE_LIMIT = 5  # 
+RATE_LIMIT_WINDOW = 10  
 request_counts = defaultdict(list)
 
 @app.before_request
 def rate_limit_check():
-    # Hanya terapkan rate limit pada endpoint API
     if request.endpoint and 'api' in request.endpoint:
         ip = request.remote_addr
         now = time.time()
         
-        # Hapus timestamp request yang sudah lewat dari jendela waktu
         request_counts[ip] = [t for t in request_counts[ip] if now - t < RATE_LIMIT_WINDOW]
         
-        # Jika jumlah request melebihi batas, tolak
         if len(request_counts[ip]) >= RATE_LIMIT:
             return jsonify({"error": "Too Many Requests, please try again later."}), 429
         
-        # Catat timestamp request saat ini
         request_counts[ip].append(now)
 
-# --- Database Simulasi dengan UUID ---
 USERS = {
     "e7a8c1d2-a3b4-4c5d-8e9f-0a1b2c3d4e5f": {'username': 'admin', 'password': 'password123', 'role': 'admin', 'name': 'Dr. Evelyn Reed'},
     "f1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d": {'username': 'manager', 'password': 'password123', 'role': 'manager', 'name': 'John Carter'},
@@ -56,7 +48,6 @@ TASKS = {
     "task-004": {"project_id": "proj-d4d4-e5e5-f6f6", "title": "Lakukan Uji Penetrasi pada Server Staging", "completed": False},
 }
 
-# --- Forms (Menggunakan Flask-WTF untuk proteksi CSRF otomatis) ---
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -66,11 +57,10 @@ class ReportForm(FlaskForm):
     title = StringField('Report Title', default='Laporan Status Proyek', validators=[DataRequired()])
     submit = SubmitField('Generate Report')
 
-# --- HALAMAN WEB (FRONTEND RENDERING) ---
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if form.validate_on_submit():  # validate_on_submit sudah termasuk cek CSRF
+    if form.validate_on_submit():  
         username = form.username.data
         password = form.password.data
         for user_id, user_data in USERS.items():
@@ -100,7 +90,6 @@ def detail_proyek(proyek_uuid):
     if 'user_id' not in session: return redirect(url_for('login'))
     project = PROJECTS.get(proyek_uuid)
     if not project: abort(404)
-    # CELAH IDOR: Tidak ada validasi apakah user yang login termasuk dalam 'assigned_users'
     return render_template('proyek.html', project=project, project_uuid=proyek_uuid)
 
 @app.route('/proyek/<proyek_uuid>/report', methods=['GET', 'POST'])
@@ -112,9 +101,7 @@ def generate_report(proyek_uuid):
     form = ReportForm()
     if form.validate_on_submit():
         report_title = form.title.data
-        # CELAH SSTI (Server-Side Template Injection): Merender input dari user secara tidak aman.
         template_string = f"<div class='container'><h1>{report_title}</h1><p>Ini adalah laporan yang dihasilkan untuk proyek: <strong>{project['name']}</strong>.</p></div>"
-        # Menggunakan Environment() kosong adalah cara yang paling rentan
         rendered_html = Environment().from_string(template_string).render()
         return rendered_html
     return render_template('report_generator.html', project=project, form=form)
@@ -132,27 +119,24 @@ def panel_admin():
     if session.get('user_role') != 'admin': abort(403)
     return render_template('admin.html', users=USERS)
 
-# --- API ENDPOINTS (BACKEND LOGIC) ---
 @app.route('/api/proyek/<proyek_uuid>/tasks', endpoint='api_get_tasks')
 def get_tasks(proyek_uuid):
     if 'user_id' not in session: return jsonify({"error": "Unauthorized"}), 401
     if proyek_uuid not in PROJECTS: return jsonify({"error": "Project not found"}), 404
     
     project_tasks = [task for task in TASKS.values() if task['project_id'] == proyek_uuid]
-    # CELAH Information Disclosure: UUID semua user di proyek ini bocor
     leaked_user_uuids = PROJECTS[proyek_uuid]['assigned_users']
     
     return jsonify({"tasks": project_tasks, "leaked_assigned_user_uuids": leaked_user_uuids})
 
 @app.route('/api/proyek/<proyek_uuid>/ganti_pemilik', methods=['POST'], endpoint='api_change_owner')
-@csrf.exempt  # Jebakan: API ini sengaja dikecualikan dari proteksi CSRF global
+@csrf.exempt  
 def change_owner(proyek_uuid):
     if 'user_id' not in session: return jsonify({"error": "Unauthorized"}), 401
     
     project = PROJECTS.get(proyek_uuid)
     if not project: return jsonify({"error": "Project not found"}), 404
 
-    # Logika bisnis yang terlihat aman: hanya pemilik saat ini yang bisa mengganti
     if project['owner_uuid'] != session['user_id']:
         return jsonify({"error": "Forbidden: Only the project owner can change ownership"}), 403
 
@@ -162,7 +146,7 @@ def change_owner(proyek_uuid):
 
     project['owner_uuid'] = new_owner_uuid
     project['assigned_users'].append(new_owner_uuid)
-    project['assigned_users'] = list(set(project['assigned_users'])) # Hapus duplikat
+    project['assigned_users'] = list(set(project['assigned_users'])) 
     
     return jsonify({"success": f"Project owner successfully changed to {USERS[new_owner_uuid]['name']}"}), 200
 
