@@ -147,7 +147,8 @@ Didistribusikan di bawah Lisensi MIT. Lihat `LICENSE` untuk informasi lebih lanj
 
 ## ## Kontak
 
-[Nama Anda] - [email@anda.com]
+[Nama Anda] - [thisochi4@anda.com]
 
-Link Proyek: [https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA](https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA)
+Link Proyek: https://github.com/OchiWebs/FacadeLab
+
 
