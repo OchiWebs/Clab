@@ -52,7 +52,7 @@ Ini adalah cara termudah dan paling andal untuk menjalankan aplikasi tanpa mengk
 
 1.  **Clone repositori ini:**
     ```sh
-    git clone [https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA.git](https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA.git)
+    git clone https://github.com/OchiWebs/FacadeLab.git
     cd NAMA_REPO_ANDA
     ```
 
@@ -70,7 +70,7 @@ Gunakan cara ini jika Anda tidak ingin menggunakan Docker.
 
 1.  **Clone repositori:**
     ```sh
-    git clone [https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA.git](https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA.git)
+    git clone https://github.com/OchiWebs/FacadeLab.git
     cd NAMA_REPO_ANDA
     ```
 
@@ -150,3 +150,4 @@ Didistribusikan di bawah Lisensi MIT. Lihat `LICENSE` untuk informasi lebih lanj
 [Nama Anda] - [email@anda.com]
 
 Link Proyek: [https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA](https://github.com/NAMA_USER_ANDA/NAMA_REPO_ANDA)
+
