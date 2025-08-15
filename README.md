@@ -1,8 +1,4 @@
-# Project Adamantine Strain
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/gist/gemini-ai-assistant/a2e04fbe58a0d4814e565982855f4648/raw/a0833a69a915998b5327289f1f0a2d219273f5ac/labvault_logo.svg" alt="Project Logo" width="150"/>
-</p>
+# Project Chimera Deceptive Cloud Platform
 
 <p align="center">
   <i>"A seemingly unbreakable system, with a fatal strain hidden within."</i>
@@ -17,7 +13,7 @@
 
 ## ## Tentang Proyek Ini
 
-**Project Adamantine Strain** adalah sebuah laboratorium keamanan siber dalam bentuk aplikasi web yang sengaja dibuat rentan (*deliberately vulnerable*). Aplikasi ini dirancang untuk mensimulasikan lingkungan korporat modern yang terlihat aman di permukaan, lengkap dengan mekanisme pertahanan seperti **CSRF Token** dan **API Rate Limiting**.
+**Project Chimera Deceptive Cloud Platform (CDCP)** adalah sebuah laboratorium keamanan siber dalam bentuk aplikasi web yang sengaja dibuat rentan (*deliberately vulnerable*). Aplikasi ini dirancang untuk mensimulasikan lingkungan korporat modern yang terlihat aman di permukaan, lengkap dengan mekanisme pertahanan seperti **CSRF Token** dan **API Rate Limiting**.
 
 Tujuan utamanya adalah untuk melatih para praktisi keamanan dalam menemukan dan mengeksploitasi celah keamanan tingkat lanjut yang bersifat multi-langkah dan tersembunyi di dalam logika bisnis atau arsitektur aplikasi.
 
@@ -150,5 +146,6 @@ Didistribusikan di bawah Lisensi MIT. Lihat `LICENSE` untuk informasi lebih lanj
 [Nama Anda] - [thisochi4@anda.com]
 
 Link Proyek: https://github.com/OchiWebs/FacadeLab
+
 
 
